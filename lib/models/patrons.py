@@ -19,3 +19,14 @@ class Patron:
             birth_date TEXT,
             )
         """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    @classmethod
+    def drop_table(cls):
+        """ Drop the table the hosts instances of the Patron class """
+        sql = """
+            DROP TABLE IF EXISTS patrons;
+        """
+        CURSOR.execute(sql)
+        CONN.commit()

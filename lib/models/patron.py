@@ -2,14 +2,14 @@ from . import CURSOR, CONN
 
 class Patron:
 
-    def __init__(self, first_name, last_name, birth_date, books=None):
+    def __init__(self, first_name, last_name, age, books=None):
         self.first_name = first_name
         self.last_name = last_name
-        self.birth_date = birth_date
+        self.age = age
         self.books = books
 
     def __repr__(self):
-        return f"<Patron: {self.last_name}, {self.first_name}  {self.birth_date}>"
+        return f"<Patron: {self.last_name}, {self.first_name}  {self.age}>"
     
     @property
     def first_name(self):
@@ -35,6 +35,18 @@ class Patron:
             raise TypeError("Last name must be a string with at least 1 character.")
 
 
+    @property
+    def age(self):
+        return self._age
+    
+    @age.setter
+    def age(self, value):
+        if isinstance(value, int) and value >= 18:
+            self._age = value
+        else:
+            raise TypeError("Age must be an integer greater than or equal to 18.")
+
+
     @classmethod
     def create_table(cls):
         """ Create a new table to keep track of attributes associated with various Patron instances """
@@ -43,7 +55,7 @@ class Patron:
             id INTEGER PRIMARY KEY,
             first_name TEXT,
             last_name TEXT,
-            birth_date TEXT
+            age TEXT
             )
         """
         CURSOR.execute(sql)
@@ -63,17 +75,17 @@ class Patron:
     def save(self):
         """ Insert a new row in the patrons table with name and DOB of the Patron instance. Update ID attribute using primary key of row """
         sql = """
-            INSERT INTO patrons (first_name, last_name, birth_date)
+            INSERT INTO patrons (first_name, last_name, age)
             VALUES (?, ?, ?)
         """
-        CURSOR.execute(sql, (self.first_name, self.last_name, self.birth_date))
+        CURSOR.execute(sql, (self.first_name, self.last_name, self.age))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
 
 
-    def create(cls, first_name, last_name, birth_date):
+    def create(cls, first_name, last_name, age):
         """ Create an instance of Patron and save its attributes to the database """
-        patron = cls(first_name, last_name, birth_date)
+        patron = cls(first_name, last_name, age)
         patron.save()
         return patron

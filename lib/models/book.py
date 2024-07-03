@@ -2,11 +2,16 @@ from . import CURSOR, CONN
 
 class Book():
 
+    all = {}
+
     def __init__(self, title, author, pages, description):
         self.title = title
         self.author = author
         self.pages = pages
         self.description = description
+
+    def __repr__(self):
+        return f"<{self.title}, by {self.author}>"
 
     @property
     def title(self):

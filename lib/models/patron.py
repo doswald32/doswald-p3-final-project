@@ -2,6 +2,8 @@ from . import CURSOR, CONN
 
 class Patron:
 
+    all = {}
+
     def __init__(self, first_name, last_name, age, id=None, books=None):
         self.first_name = first_name
         self.last_name = last_name
@@ -83,10 +85,14 @@ class Patron:
         CONN.commit()
 
         self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
 
-
+    @classmethod
     def create(cls, first_name, last_name, age):
         """ Create an instance of Patron and save its attributes to the database """
+        breakpoint()
         patron = cls(first_name, last_name, age)
+        breakpoint()
         patron.save()
+        breakpoint()
         return patron

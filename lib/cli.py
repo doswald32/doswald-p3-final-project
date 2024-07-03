@@ -15,6 +15,8 @@ def main():
             exit_program()
         elif choice == "1":
             helper_1()
+        elif choice == "2":
+            add_customer()
         else:
             print("Invalid choice")
 
@@ -23,7 +25,7 @@ def menu():
     print("Please select an option:")
     print("0. Exit the program")
     print("1. Access customer database")
-    print("2. See list of books")
+    print("2. Add new customer")
 
 
 if __name__ == "__main__":

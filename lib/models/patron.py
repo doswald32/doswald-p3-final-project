@@ -22,6 +22,19 @@ class Patron:
         else:
             raise TypeError("First name must be a string with at least 1 character.")
 
+
+    @property
+    def last_name(self):
+        return self._last_name
+    
+    @last_name.setter
+    def last_name(self, value):
+        if isinstance(value, str) and len(value) >= 1:
+            self._last_name = value
+        else:
+            raise TypeError("Last name must be a string with at least 1 character.")
+
+
     @classmethod
     def create_table(cls):
         """ Create a new table to keep track of attributes associated with various Patron instances """
@@ -36,6 +49,7 @@ class Patron:
         CURSOR.execute(sql)
         CONN.commit()
 
+
     @classmethod
     def drop_table(cls):
         """ Drop the table the hosts instances of the Patron class """
@@ -44,6 +58,7 @@ class Patron:
         """
         CURSOR.execute(sql)
         CONN.commit()
+
 
     def save(self):
         """ Insert a new row in the patrons table with name and DOB of the Patron instance. Update ID attribute using primary key of row """
@@ -55,6 +70,7 @@ class Patron:
         CONN.commit()
 
         self.id = CURSOR.lastrowid
+
 
     def create(cls, first_name, last_name, birth_date):
         """ Create an instance of Patron and save its attributes to the database """

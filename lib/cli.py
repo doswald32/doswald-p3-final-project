@@ -3,7 +3,7 @@
 
 from helpers import (
     exit_program,
-    helper_1
+    list_patrons
 )
 
 
@@ -14,7 +14,7 @@ def main():
         if choice == "0":
             exit_program()
         elif choice == "1":
-            helper_1()
+            list_patrons()
         elif choice == "2":
             add_customer()
         else:

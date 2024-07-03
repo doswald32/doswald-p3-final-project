@@ -4,6 +4,7 @@ class Patron:
 
     all = {}
 
+
     def __init__(self, first_name, last_name, age, id=None, books=None):
         self.first_name = first_name
         self.last_name = last_name
@@ -11,9 +12,11 @@ class Patron:
         self.id = id
         self.books = books
 
+
     def __repr__(self):
         return f"<Patron ID {self.id}: {self.last_name}, {self.first_name}   Age: {self.age}>"
     
+
     @property
     def first_name(self):
         return self._first_name
@@ -90,9 +93,57 @@ class Patron:
     @classmethod
     def create(cls, first_name, last_name, age):
         """ Create an instance of Patron and save its attributes to the database """
-        breakpoint()
         patron = cls(first_name, last_name, age)
-        breakpoint()
         patron.save()
-        breakpoint()
         return patron
+
+
+    def update(self):
+        """ Update table row associated with the Patron instance """
+        sql = """
+            UPDATE patrons 
+            SET first_name = ?, last_name = ?, age = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.first_name, self.last_name, self.age, self.id))
+        CONN.commit()
+
+    
+    def delete(self):
+        """ Delete database row associated with Patron instance """
+        sql = """
+            DELETE FROM patrons
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        del type(self).all[self.id]
+        self.id = None
+
+
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return a Patron from the table"""
+        patron = cls.all.get(row[0])
+        if patron:
+            patron.first_name = row[1]
+            patron.last_name = row[2]
+            patron.age = row[3]
+        else:
+            patron = cls(row[1], row[2], row[3])
+            patron.id = row[0]
+            cls.all[patron.id] = patron
+        return patron
+    
+    @classmethod
+    def get_all(cls):
+        """ Return a list of patrons from the Patrons table """
+        sql = """
+            SELECT * FROM patrons
+        """
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+
+        

@@ -1,4 +1,5 @@
 from . import CURSOR, CONN
+import ipdb
 
 class Patron:
 
@@ -61,7 +62,7 @@ class Patron:
             id INTEGER PRIMARY KEY,
             first_name TEXT,
             last_name TEXT,
-            age TEXT
+            age INTEGER
             )
         """
         CURSOR.execute(sql)
@@ -79,7 +80,7 @@ class Patron:
 
 
     def save(self):
-        """ Insert a new row in the patrons table with name and DOB of the Patron instance. Update ID attribute using primary key of row """
+        """ Insert a new row in the patrons table with name and DOB of the Patron instance. Update ID attribute using primary key of row and save the object to the Patron dictionary """
         sql = """
             INSERT INTO patrons (first_name, last_name, age)
             VALUES (?, ?, ?)
@@ -89,6 +90,7 @@ class Patron:
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
 
     @classmethod
     def create(cls, first_name, last_name, age):
@@ -127,14 +129,15 @@ class Patron:
 
     @classmethod
     def instance_from_db(cls, row):
-        """Return a Patron from the table"""
+        """ Return a Patron object using data from the table """
         patron = cls.all.get(row[0])
+        age = int(row[3])
         if patron:
             patron.first_name = row[1]
             patron.last_name = row[2]
-            patron.age = row[3]
+            patron.age = age
         else:
-            patron = cls(row[1], row[2], row[3])
+            patron = cls(row[1], row[2], age)
             patron.id = row[0]
             cls.all[patron.id] = patron
         return patron
@@ -146,7 +149,6 @@ class Patron:
             SELECT * FROM patrons
         """
         rows = CURSOR.execute(sql).fetchall()
-
         return [cls.instance_from_db(row) for row in rows]
 
         

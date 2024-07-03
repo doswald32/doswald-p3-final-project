@@ -2,14 +2,15 @@ from . import CURSOR, CONN
 
 class Patron:
 
-    def __init__(self, first_name, last_name, age, books=None):
+    def __init__(self, first_name, last_name, age, id=None, books=None):
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
+        self.id = id
         self.books = books
 
     def __repr__(self):
-        return f"<Patron: {self.last_name}, {self.first_name}  {self.age}>"
+        return f"<Patron ID {self.id}: {self.last_name}, {self.first_name}   Age: {self.age}>"
     
     @property
     def first_name(self):

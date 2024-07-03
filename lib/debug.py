@@ -2,7 +2,6 @@
 # lib/debug.py
 
 from models.patron import Patron
-import datetime
 
 import ipdb
 
@@ -12,11 +11,11 @@ def reset_database():
 
 reset_database()
 
-Keith = Patron.create("Keith", "Stone", datetime.date(1978, 1, 11))
-print(Keith)
+Keith = Patron("Keith", "Stone", 34)
+Amy = Patron("Amy", "Adams", 46)
 
-Amy = Patron.create("Amy", "Adams", datetime.date(1988, 12, 22))
-print(Amy)
+Keith.save()
+Amy.save()
 
 ipdb.set_trace()
 

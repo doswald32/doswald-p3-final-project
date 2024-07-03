@@ -10,7 +10,19 @@ def reset_database():
     Patron.drop_table()
     Patron.create_table()
 
-    Patron.create("Caitlin", "Clark", datetime.date(1999, 4, 21))
+reset_database()
+
+Keith = Patron("Keith", "Stone", datetime.date(1978, 1, 11))
+print(Keith)
+
+Keith.save()
+print(Keith)
+
+Amy = Patron("Amy", "Adams", datetime.date(1988, 12, 22))
+print(Amy)
+
+Amy.save()
+print(Amy)
 
 ipdb.set_trace()
 

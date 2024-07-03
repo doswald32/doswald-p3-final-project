@@ -9,7 +9,7 @@ class Patron:
         self.books = books
 
     def __repr__(self):
-        return f"<Patron {self.id}: {self.last_name}, {self.first_name}  {self.birth_date}>"
+        return f"<Patron: {self.last_name}, {self.first_name}  {self.birth_date}>"
 
     @classmethod
     def create_table(cls):
@@ -19,7 +19,7 @@ class Patron:
             id INTEGER PRIMARY KEY,
             first_name TEXT,
             last_name TEXT,
-            birth_date TEXT,
+            birth_date TEXT
             )
         """
         CURSOR.execute(sql)

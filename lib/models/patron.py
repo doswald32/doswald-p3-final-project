@@ -122,9 +122,6 @@ class Patron:
 
         del type(self).all[self.id]
         self.id = None
-        print("***DELETED***")
-        print("***DELETED***")
-        print("***DELETED***")  
 
 
     @classmethod
@@ -165,3 +162,15 @@ class Patron:
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
+
+    @classmethod
+    def find_by_first_name(cls, first_name):
+        sql = """
+            SELECT * 
+            FROM patrons 
+            WHERE first_name = ?
+        """
+        row = CURSOR.execute(sql, (first_name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+        

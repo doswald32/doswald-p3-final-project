@@ -12,16 +12,10 @@ def reset_database():
 
 reset_database()
 
-Keith = Patron("Keith", "Stone", datetime.date(1978, 1, 11))
+Keith = Patron.create("Keith", "Stone", datetime.date(1978, 1, 11))
 print(Keith)
 
-Keith.save()
-print(Keith)
-
-Amy = Patron("Amy", "Adams", datetime.date(1988, 12, 22))
-print(Amy)
-
-Amy.save()
+Amy = Patron.create("Amy", "Adams", datetime.date(1988, 12, 22))
 print(Amy)
 
 ipdb.set_trace()

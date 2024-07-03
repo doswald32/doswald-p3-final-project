@@ -10,6 +10,17 @@ class Patron:
 
     def __repr__(self):
         return f"<Patron: {self.last_name}, {self.first_name}  {self.birth_date}>"
+    
+    @property
+    def first_name(self):
+        return self._first_name
+    
+    @first_name.setter
+    def first_name(self, value):
+        if isinstance(value, str) and len(value) >= 1:
+            self._first_name = value
+        else:
+            raise TypeError("First name must be a string with at least 1 character.")
 
     @classmethod
     def create_table(cls):

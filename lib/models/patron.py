@@ -149,6 +149,8 @@ class Patron:
             SELECT * FROM patrons
         """
         rows = CURSOR.execute(sql).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
+        for i, row in enumerate(rows, start=1):
+            print(f"{i}. {row[1]}")
+        # return [cls.instance_from_db(row) for row in rows]
 
         

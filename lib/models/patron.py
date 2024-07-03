@@ -44,3 +44,9 @@ class Patron:
         CONN.commit()
 
         self.id = CURSOR.lastrowid
+
+    def create(cls, first_name, last_name, birth_date):
+        """ Create an instance of Patron and save its attributes to the database """
+        patron = cls(first_name, last_name, birth_date)
+        patron.save()
+        return patron

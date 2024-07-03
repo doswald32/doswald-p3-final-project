@@ -142,6 +142,8 @@ class Patron:
             cls.all[patron.id] = patron
         return patron
     
+    
+    
     @classmethod
     def get_all(cls):
         """ Return a list of patrons from the Patrons table """
@@ -152,4 +154,14 @@ class Patron:
 
         return [cls.instance_from_db(row) for row in rows]
 
-        
+    
+    @classmethod
+    def find_by_id(cls, id):
+        """ Return a Patron object associated with the table row that matches the id """
+        sql = """
+            SELECT *
+            FROM patrons
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None

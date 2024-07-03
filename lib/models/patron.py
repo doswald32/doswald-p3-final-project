@@ -120,6 +120,9 @@ class Patron:
 
         del type(self).all[self.id]
         self.id = None
+        print("***DELETED***")
+        print("***DELETED***")
+        print("***DELETED***")  
 
 
     @classmethod

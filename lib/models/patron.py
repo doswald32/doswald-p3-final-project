@@ -1,5 +1,4 @@
 from . import CURSOR, CONN
-import ipdb
 
 class Patron:
 
@@ -24,7 +23,7 @@ class Patron:
     
     @first_name.setter
     def first_name(self, value):
-        if isinstance(value, str) and len(value) >= 1:
+        if isinstance(value, str) and len(value):
             self._first_name = value
         else:
             raise TypeError("First name must be a string with at least 1 character.")

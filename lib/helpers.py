@@ -55,11 +55,24 @@ def list_books(choice):
     sql = """
         SELECT *
         FROM books
-        WHERE id = ?
+        WHERE patron_id = ?
     """
     rows = CURSOR.execute(sql, (choice,)).fetchall()
     for i, row in enumerate(rows, start=1):
-    	print(f"{i}. {row}")
+    	print(f"{i}. {row[1]}")
+
+# def patron_table_length():
+#     sql = """
+#         SELECT COUNT(id)
+#         FROM patrons
+#     """
+#     row = CURSOR.execute(sql)
+#     print(row)
+#     return row
+
+
+def add_new_patron():
+    pass
 
 
 

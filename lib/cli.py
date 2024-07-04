@@ -7,7 +7,8 @@ from helpers import (
     exit_program,
     list_patrons,
     update_patron,
-    list_books
+    list_books,
+    add_new_patron
 )
 
 
@@ -37,16 +38,44 @@ def patron_menu():
     print("Press A or a to add a new patron")
     print("Press E or e to exit")
     choice = input("> ")
-    if choice == "1" or choice == "2":
+    if int(choice) <= Patron.table_length():
          list_books(choice)
+         books_menu()
     elif choice == "B" or choice == "b":
          main()
-    elif choice == "B":
+    elif choice == "A" or choice == "a":
         list_patrons()
         patron_menu()
-    elif choice == "2":
+    elif choice == "E" or choice == "e":
+        exit_program()
+    else:
+        print("Please make a valid selection")
+    
+
+
+def books_menu():
+    print("Please select the number of the book to its details")
+    print("        or")
+    print("Press B or b to go back to the previous menu")
+    print("Press A or a to add a new book for this patron")
+    print("Press D or d to delete this patron")
+    print("Press E or e to exit")
+    choice = input("> ")
+    if choice == "1" or "2":
+        list_books(choice)
+        books_menu()
+    elif choice == "B" or choice == "b":
+        patron_menu()
+    elif choice == "A" or choice == "a":
+        add_new_patron()
+        books_menu()
+    elif choice == "D" or choice == "d":
         update_patron()
         patron_menu()
+    elif choice == "E" or choice == "e":
+        exit_program()
+    else:
+        print("Please make a valid selection")
          
 
 if __name__ == "__main__":

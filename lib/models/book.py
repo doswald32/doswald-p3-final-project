@@ -1,5 +1,4 @@
 from . import CURSOR, CONN
-from patron import Patron
 
 class Book():
 
@@ -17,7 +16,7 @@ class Book():
 
     def __repr__(self):
         return (
-            f"<{self.title}, by {self.author}>"
+            f"<{self.title}, by {self.author}>\n"
             f"<Patron ID: {self.patron_id}>"
         )
 
@@ -78,9 +77,8 @@ class Book():
             title TEXT,
             author TEXT,
             pages INTEGER,
-            description TEXT
-            patron_id INTEGER,
-            FOREIGN KEY (patron_id) REFERENCES patrons(id)
+            description TEXT,
+            patron_id INTEGER
             )
         """
         CURSOR.execute(sql)
@@ -110,13 +108,9 @@ class Book():
     
     @classmethod
     def create(cls, title, author, pages, description, patron_id):
-        for book in cls.all:
-            if book.title == title:
-                raise Exception("Book already exists.")
-            else:
-                book = cls(title, author, pages, description, patron_id)
-                book.save()
-                return book
+            book = cls(title, author, pages, description, patron_id)
+            book.save()
+            return book
     
 
     def update(self):

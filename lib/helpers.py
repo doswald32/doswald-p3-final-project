@@ -1,6 +1,7 @@
 # lib/helpers.py
 
 from models.patron import Patron
+from models.book import Book
 from models.__init__ import CURSOR, CONN
 
 

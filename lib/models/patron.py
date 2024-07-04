@@ -5,12 +5,11 @@ class Patron:
     all = {}
 
 
-    def __init__(self, first_name, last_name, age, id=None, books=None):
+    def __init__(self, first_name, last_name, age, id=None):
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
         self.id = id
-        self.books = books
 
 
     def __repr__(self):
@@ -54,14 +53,18 @@ class Patron:
 
 
     def books(self):
-        from book import Book
+        from lib.models.book import Book
         sql = """
             SELECT * FROM books
             WHERE patron_id = ?
         """
-        CURSOR.execute(sql, (self.id,),)
+        print(f"Patron ID: {self.id}")
+        CURSOR.execute(sql, (self.id,))
         rows = CURSOR.fetchall()
-        return [Book.instance_from_db(row) for row in rows]
+        print(f"Rows: {rows}")
+        books = [Book.instance_from_db(row) for row in rows]
+        print(f"Books: {books}")
+        return books
 
 
     @classmethod
@@ -111,7 +114,7 @@ class Patron:
 
 
     def update(self):
-        """ Update table row associated with the Patron instance """
+        """ Updates table row associated with the Patron instance, not the object itself. """
         sql = """
             UPDATE patrons 
             SET first_name = ?, last_name = ?, age = ?

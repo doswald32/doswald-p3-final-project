@@ -1,4 +1,5 @@
 from . import CURSOR, CONN
+from lib.models.patron import Patron
 
 class Book():
 
@@ -17,7 +18,7 @@ class Book():
     def __repr__(self):
         return (
             f"<{self.title}, by {self.author}>\n"
-            f"<Patron ID: {self.patron_id}>"
+            f"<Patron ID: {self.patron_id}>\n"
         )
 
 
@@ -68,6 +69,18 @@ class Book():
         else:
             raise TypeError("Description must be a string between 1 and 1000 characters.")
         
+
+    @property
+    def patron_id(self):
+        return self._patron_id
+    
+    @patron_id.setter
+    def patron_id(self, patron_id):
+        if type(patron_id) is int and Patron.find_by_id(patron_id):
+            self._patron_id = patron_id
+        else:
+            raise ValueError("department_id must reference a department in the database")
+
 
     @classmethod
     def create_table(cls):

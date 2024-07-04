@@ -1,7 +1,5 @@
-from models.patron import Patron
-from models.book import Book
-from models.__init__ import CURSOR, CONN 
-import ipdb
+from lib.models.patron import Patron
+from lib.models.book import Book
 
 def seed_database():
     Patron.drop_table()
@@ -15,4 +13,5 @@ def seed_database():
     HP2 = Book.create("Harry Potter 2", "JK Rowling", 287, "The story continues.", Steve_oswald.id)
     TTP = Book.create("The Tipping Point", "Malcom Gladwell", 256, "What makes a marketing campaign successful?", Carol_oswald.id)
     TDC = Book.create("The DaVinci Code", "Dan Brown", 500, "It's a good one!", Carol_oswald.id)
+    print("Database seeded.")
 

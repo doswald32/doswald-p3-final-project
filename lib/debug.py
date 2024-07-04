@@ -2,20 +2,12 @@
 # lib/debug.py
 
 from models.patron import Patron
+from models.book import Book
+from seed import seed_database
 
 import ipdb
 
-def reset_database():
-    Patron.drop_table()
-    Patron.create_table()
-
-reset_database()
-
-Keith = Patron("Keith", "Stone", 34)
-Amy = Patron("Amy", "Adams", 46)
-
-Keith.save()
-Amy.save()
+seed_database()
 
 ipdb.set_trace()
 

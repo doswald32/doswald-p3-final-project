@@ -1,4 +1,4 @@
-from __init__ import CURSOR, CONN
+from . import CURSOR, CONN
 
 class Book():
 
@@ -46,9 +46,10 @@ class Book():
     
     @pages.setter
     def pages(self, value):
-        if isinstance(value, int) and 1 >= len(value) <=10000:
+        if isinstance(value, int):
             self._pages = value
-        raise TypeError("Pages must be an integer between 1-10000.")
+        else:
+            raise TypeError("Pages must be an integer between 1-10000.")
     
 
     @property
@@ -57,7 +58,7 @@ class Book():
     
     @description.setter
     def description(self, value):
-        if isinstance(value, str) and 1 >= len(value) <= 1000:
+        if isinstance(value, str) and 1 <= len(value) <= 1000:
             self._description = value
         else:
             raise TypeError("Description must be a string between 1 and 1000 characters.")
@@ -101,9 +102,13 @@ class Book():
     
     @classmethod
     def create(cls, title, author, pages, description):
-        book = cls(title, author, pages, description)
-        book.save()
-        return book
+        for book in cls.all:
+            if book.title == title:
+                raise Exception("Book already exists.")
+            else:
+                book = cls(title, author, pages, description)
+                book.save()
+                return book
     
 
     def update(self):

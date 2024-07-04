@@ -1,5 +1,5 @@
-from lib.models.patron import Patron
-from lib.models.book import Book
+from models.patron import Patron
+from models.book import Book
 
 def seed_database():
     Patron.drop_table()

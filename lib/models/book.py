@@ -1,5 +1,5 @@
 from . import CURSOR, CONN
-from lib.models.patron import Patron
+from models.patron import Patron
 
 class Book():
 

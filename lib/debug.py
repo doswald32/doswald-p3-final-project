@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # lib/debug.py
 
-from lib.seed import seed_database
+from seed import seed_database
 import ipdb
 
-from lib.models.book import Book
-from lib.models.patron import Patron
+from models.book import Book
+from models.patron import Patron
 
 seed_database()
 

@@ -1,10 +1,12 @@
 # lib/cli.py
 #!/user/bin/env python3
 
+from models.patron import Patron
+
 from helpers import (
     exit_program,
     list_patrons,
-    patron_details
+    update_patron
 )
 
 
@@ -17,8 +19,6 @@ def main():
         elif choice == "1":
             list_patrons()
             patron_menu()
-        elif choice == "2":
-            add_customer()
         else:
             print("Invalid choice")
 
@@ -26,20 +26,27 @@ def main():
 def main_menu():
     print("Please select an option:")
     print("0. Exit the program")
-    print("1. View customer database")
-    print("2. View books")
+    print("1. See patrons")
 
 
 def patron_menu():
     print("Please select an option:")
-    print("0. Exit the program")
-    print("1. Select a patron to see additional details")
+    print("0. Go back to the previous menu")
+    print("1. See patrons list")
     print("2. Update a patron")
     print("3. Add a patron")
     print("4. Delete a patron")
+    print("5. Exit the program")
     choice = input("> ")
+    if choice == "0":
+         main()
     if choice == "1":
-        patron_details()
+        list_patrons()
+        patron_menu()
+    elif choice == "2":
+        update_patron()
+        patron_menu()
+         
 
 if __name__ == "__main__":
     main()

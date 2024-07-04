@@ -141,13 +141,13 @@ class Patron:
     def instance_from_db(cls, row):
         """ Return a Patron object using data from the table """
         patron = cls.all.get(row[0])
-        age = int(row[3])
+        # age = int(row[3])
         if patron:
             patron.first_name = row[1]
             patron.last_name = row[2]
-            patron.age = age
+            patron.age = row[3]
         else:
-            patron = cls(row[1], row[2], age)
+            patron = cls(row[1], row[2], row[3])
             patron.id = row[0]
             cls.all[patron.id] = patron
         return patron

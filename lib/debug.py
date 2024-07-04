@@ -9,6 +9,9 @@ from models.patron import Patron
 
 seed_database()
 
+steve = Patron.find_by_first_name("Steve")
+steve.update()
+
 ipdb.set_trace()
 
 

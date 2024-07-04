@@ -3,7 +3,6 @@
 from models.patron import Patron
 from models.book import Book
 from models.__init__ import CURSOR, CONN
-import ipdb
 
 
 def list_patrons():
@@ -51,15 +50,21 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
-def list_books(choice):
+def list_books(choice, books_menu, patron_menu):
     sql = """
         SELECT *
         FROM books
         WHERE patron_id = ?
     """
     rows = CURSOR.execute(sql, (choice,)).fetchall()
-    for i, row in enumerate(rows, start=1):
-    	print(f"{i}. {row[1]}")
+    if rows:
+        for i, row in enumerate(rows, start=1):
+            print(f"{i}. {row[1]}")
+        books_menu()
+    else:
+        print("Patron has no books")
+        list_patrons()
+        patron_menu()
 
 
 def add_new_patron():

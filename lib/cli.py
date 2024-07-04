@@ -2,7 +2,6 @@
 #!/user/bin/env python3
 
 from models.patron import Patron
-
 from helpers import (
     exit_program,
     list_patrons,
@@ -13,17 +12,16 @@ from helpers import (
 
 
 def main():
-    # while True:
-        main_menu()
-        choice = input("> ")
-        if choice == "L" or choice == "l":
-            list_patrons()
-            patron_menu()
-        elif choice == "E" or choice == "e":
-            exit_program()
-        else:
-            print("Please make a valid selection")
-            main()
+    main_menu()
+    choice = input("> ")
+    if choice == "L" or choice == "l":
+        list_patrons()
+        patron_menu()
+    elif choice == "E" or choice == "e":
+        exit_program()
+    else:
+        print("Please make a valid selection")
+        main()
             
 
 
@@ -41,7 +39,7 @@ def patron_menu():
     print("Press E or e to exit")
     choice = input("> ")
     if choice.isdigit() and int(choice) <= Patron.table_length():
-        list_books(int(choice))
+        list_books(int(choice), books_menu, patron_menu)
         books_menu()
     elif choice == "B" or choice == "b":
         main()
@@ -57,8 +55,6 @@ def patron_menu():
         patron_menu()
 
     
-
-
 def books_menu():
     print("Please select the number of the book to its details")
     print("        or")
@@ -69,9 +65,9 @@ def books_menu():
     choice = input("> ")
     if choice.isdigit() and int(choice) <= Patron.table_length():
         list_books(choice)
-        books_menu()
     elif choice == "B" or choice == "b":
-        main()
+        list_patrons()
+        patron_menu()
     elif choice == "A" or choice == "a":
         add_new_patron()
         books_menu()
@@ -82,6 +78,7 @@ def books_menu():
         exit_program()
     else:
         print("Please make a valid selection")
+        books_menu()
          
 
 if __name__ == "__main__":

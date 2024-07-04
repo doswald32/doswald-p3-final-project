@@ -6,6 +6,7 @@ import ipdb
 
 from models.book import Book
 from models.patron import Patron
+from helpers import *
 
 seed_database()
 

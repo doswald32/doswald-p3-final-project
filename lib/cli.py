@@ -16,40 +16,46 @@ def main():
     # while True:
         main_menu()
         choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
+        if choice == "L" or choice == "l":
             list_patrons()
             patron_menu()
+        elif choice == "E" or choice == "e":
+            exit_program()
         else:
-            print("Invalid choice")
+            print("Please make a valid selection")
+            main()
+            
 
 
 def main_menu():
     print("Please select an option:")
-    print("0. Exit the program")
-    print("1. See patrons")
+    print("Press L or l to see a list of patrons")
+    print("Press E or e to exit")
 
 
 def patron_menu():
-    print("Please select the number of the patron to see their books")
+    print("Please select patron number to see their books")
     print("         or")
     print("Press B or b to go back to the previous menu")
     print("Press A or a to add a new patron")
     print("Press E or e to exit")
     choice = input("> ")
-    if int(choice) <= Patron.table_length():
-         list_books(choice)
-         books_menu()
+    if choice.isdigit() and int(choice) <= Patron.table_length():
+        list_books(int(choice))
+        books_menu()
     elif choice == "B" or choice == "b":
-         main()
+        main()
     elif choice == "A" or choice == "a":
+        add_new_patron()
         list_patrons()
         patron_menu()
     elif choice == "E" or choice == "e":
         exit_program()
     else:
         print("Please make a valid selection")
+        list_patrons()
+        patron_menu()
+
     
 
 
@@ -61,11 +67,11 @@ def books_menu():
     print("Press D or d to delete this patron")
     print("Press E or e to exit")
     choice = input("> ")
-    if choice == "1" or "2":
+    if choice.isdigit() and int(choice) <= Patron.table_length():
         list_books(choice)
         books_menu()
     elif choice == "B" or choice == "b":
-        patron_menu()
+        main()
     elif choice == "A" or choice == "a":
         add_new_patron()
         books_menu()

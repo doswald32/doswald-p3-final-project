@@ -61,19 +61,12 @@ def list_books(choice):
     for i, row in enumerate(rows, start=1):
     	print(f"{i}. {row[1]}")
 
-# def patron_table_length():
-#     sql = """
-#         SELECT COUNT(id)
-#         FROM patrons
-#     """
-#     row = CURSOR.execute(sql)
-#     print(row)
-#     return row
-
 
 def add_new_patron():
-    pass
-
+    first_name = input("Enter the patron's first name: ")
+    last_name = input("Enter the patron's last name: ")
+    age = int(input("Enter the patron's age: "))
+    Patron.create(first_name, last_name, age)
 
 
 def exit_program():

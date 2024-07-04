@@ -53,6 +53,17 @@ class Patron:
             raise TypeError("Age must be an integer greater than or equal to 18.")
 
 
+    def books(self):
+        from book import Book
+        sql = """
+            SELECT * FROM books
+            WHERE patron_id = ?
+        """
+        CURSOR.execute(sql, (self.id,),)
+        rows = CURSOR.fetchall()
+        return [Book.instance_from_db(row) for row in rows]
+
+
     @classmethod
     def create_table(cls):
         """ Create a new table to keep track of attributes associated with various Patron instances """

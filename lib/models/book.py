@@ -1,19 +1,25 @@
 from . import CURSOR, CONN
+from patron import Patron
 
 class Book():
 
     all = {}
 
 
-    def __init__(self, title, author, pages, description):
+    def __init__(self, title, author, pages, description, patron_id, id=None):
+        self.id = id
         self.title = title
         self.author = author
         self.pages = pages
         self.description = description
+        self.patron_id = patron_id
 
 
     def __repr__(self):
-        return f"<{self.title}, by {self.author}>"
+        return (
+            f"<{self.title}, by {self.author}>"
+            f"<Patron ID: {self.patron_id}>"
+        )
 
 
     @property
@@ -73,6 +79,8 @@ class Book():
             author TEXT,
             pages INTEGER,
             description TEXT
+            patron_id INTEGER,
+            FOREIGN KEY (patron_id) REFERENCES patrons(id)
             )
         """
         CURSOR.execute(sql)
@@ -90,10 +98,10 @@ class Book():
         
     def save(self):
         sql = """
-            INSERT INTO books (title, author, pages, description)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO books (title, author, pages, description, patron_id)
+            VALUES (?, ?, ?, ?, ?)
         """
-        CURSOR.execute(sql, (self.title, self.author, self.pages, self.description))
+        CURSOR.execute(sql, (self.title, self.author, self.pages, self.description, self.patron_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -101,12 +109,12 @@ class Book():
 
     
     @classmethod
-    def create(cls, title, author, pages, description):
+    def create(cls, title, author, pages, description, patron_id):
         for book in cls.all:
             if book.title == title:
                 raise Exception("Book already exists.")
             else:
-                book = cls(title, author, pages, description)
+                book = cls(title, author, pages, description, patron_id)
                 book.save()
                 return book
     
@@ -114,10 +122,10 @@ class Book():
     def update(self):
         sql = """
             UPDATE books
-            SET title = ?, author = ?, pages = ?, description = ?
+            SET title = ?, author = ?, pages = ?, description = ?, patron_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.title, self.author, self.pages, self.description, self.id))
+        CURSOR.execute(sql, (self.title, self.author, self.pages, self.description, self.patron_id, self.id))
         CONN.commit()
 
 
@@ -141,8 +149,9 @@ class Book():
             book.author = row[2]
             book.pages = row[3]
             book.description = row[4]
+            book.patron_id = row[5]
         else:
-            book = cls(row[1], row[2], row[3], row[4])
+            book = cls(row[1], row[2], row[3], row[4], row[5])
             book.id = row[0]
             cls.all[book.id] = book
         return book

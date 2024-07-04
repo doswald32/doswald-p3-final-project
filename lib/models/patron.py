@@ -61,10 +61,12 @@ class Patron:
         print(f"Patron ID: {self.id}")
         CURSOR.execute(sql, (self.id,))
         rows = CURSOR.fetchall()
-        print(f"Rows: {rows}")
+        # print(f"Rows: {rows}")
         books = [Book.instance_from_db(row) for row in rows]
-        print(f"Books: {books}")
-        return books
+        for i, book in enumerate(books, start=1):
+            print(f"{i}. {book.title}")
+        # print(f"Books: {books}")
+        # return books
 
 
     @classmethod

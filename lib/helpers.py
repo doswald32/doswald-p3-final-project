@@ -51,6 +51,17 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
+def list_books(choice):
+    sql = """
+        SELECT *
+        FROM books
+        WHERE id = ?
+    """
+    rows = CURSOR.execute(sql, (choice,)).fetchall()
+    for i, row in enumerate(rows, start=1):
+    	print(f"{i}. {row}")
+
+
 
 def exit_program():
     print("Goodbye!")

@@ -126,3 +126,51 @@ class Book():
 
         del type(self).all[self.id]
         self.id = None
+
+
+    @classmethod
+    def instance_from_db(cls, row):
+        book = cls.all.get(row[0])
+        if book:
+            book.title = row[1]
+            book.author = row[2]
+            book.pages = row[3]
+            book.description = row[4]
+        else:
+            book = cls(row[1], row[2], row[3], row[4])
+            book.id = row[0]
+            cls.all[book.id] = book
+        return book
+    
+
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT * 
+            FROM books
+        """
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+    
+
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT *
+            FROM books
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+
+    @classmethod
+    def find_by_title(cls, title):
+        sql = """
+            SELECT *
+            FROM books
+            WHERE title = ?
+        """
+        row = CURSOR.execute(sql, (title,)).fetchone()
+        return cls.instance_from_db(row) if row else None

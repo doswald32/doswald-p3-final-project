@@ -9,8 +9,8 @@ def list_patrons():
     patrons = Patron.get_all()
     print("**********")
     print("")
-    for i, patron in enumerate(patrons, start=1):
-        print(f"{i}. Patron ID: {patron.id} {patron.first_name} {patron.last_name}, {patron.age}")
+    for patron in patrons:
+        print(f"Patron ID: {patron.id} {patron.first_name} {patron.last_name}, {patron.age}")
     print("")
     print("**********")
     print("")
@@ -50,7 +50,7 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
-def list_books(p_choice, books_menu, patron_menu):
+def list_books(p_choice, books_menu, no_book_menu):
     sql = """
         SELECT *
         FROM books
@@ -65,7 +65,8 @@ def list_books(p_choice, books_menu, patron_menu):
         print("")
         print("Patron has no books")
         print("")
-        list_patrons()
+        no_book_menu(p_choice)
+        
 
 
 def add_new_patron():

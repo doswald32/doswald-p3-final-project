@@ -84,7 +84,6 @@ def display_book_info(p_choice, b_choice):
     """
     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     i = int(b_choice) - 1
-    print(rows)
     print("")
     print(f"Title: {rows[i][1]}")
     print(f"Author: {rows[i][2]}")

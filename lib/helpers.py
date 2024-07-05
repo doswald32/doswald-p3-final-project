@@ -131,13 +131,30 @@ def delete_patron(p_choice):
 
 def delete_book(p_choice):
     sql = """
-        SELECT * 
-        FROM books
-        WHERE patron_id = ?
+        DELETE FROM books
+        WHERE id = ?
     """
-    print(p_choice)
-    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-    print(type(rows[1]))
+    CURSOR.execute(sql, (p_choice,))
+    CONN.commit()
+    print("")
+    print("Book successfully deleted")
+    print("")
+    list_patrons()
+
+
+def update_book(title, author, pages, description, p_choice):
+    sql = """
+        UPDATE books
+        SET title = ?, author = ?, pages = ?, description = ?
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (title, author, pages, description, p_choice))
+    CONN.commit()
+    print("")
+    print("Book updated")
+    print("")
+
+
 
 
 def exit_program():

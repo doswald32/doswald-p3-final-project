@@ -13,7 +13,8 @@ from helpers import (
     print_choice_name,
     add_new_book,
     delete_patron,
-    delete_book
+    delete_book,
+    update_book
 )
 
 
@@ -122,7 +123,6 @@ def books_menu(p_choice):
         patron_menu()
     elif b_choice == "D" or b_choice == "d":
         delete_patron(p_choice)
-        list_patrons()
         patron_menu()
     elif b_choice == "E" or b_choice == "e":
         exit_program()
@@ -137,6 +137,7 @@ def single_book_menu(p_choice):
     print("")
     print("Press B or b to go back to the previous menu")
     print("Press D or d to delete this book")
+    print("Press U or u to update book")
     print("Press E or e to exit")
     f_choice = input("> ")
     if f_choice == "B" or f_choice == "b":
@@ -144,12 +145,20 @@ def single_book_menu(p_choice):
         list_books(p_choice, books_menu, patron_menu)
         books_menu(p_choice)
     elif f_choice == "D" or f_choice == "d":
-        delete_book()
+        delete_book(p_choice)
+        patron_menu()
+    elif f_choice == "U" or f_choice == "u":
+        title = input("Enter book's title: ")
+        author = input("Enter book's author: ")
+        pages = input("Enter number of pages: ")
+        description = input("Enter book description: ")
+        update_book(title, author, pages, description, p_choice)
+        list_books(p_choice, books_menu, patron_menu)
     elif f_choice == "E" or f_choice == "e":
         exit_program()
     else:
         print("Please make a valid selection")
-        books_menu()
+        books_menu(p_choice)
          
 
 if __name__ == "__main__":

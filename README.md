@@ -2,7 +2,7 @@
 
 ## Overview
 
-- Welcome! In just a few easy steps, you'll be able to operate a library database where you can access library patrons and the books they've checked out.
+Welcome! In just a few easy steps, you'll be able to operate a library database where you can access library patrons and the books they've checked out.
 
 ## Accessing the CLI
 

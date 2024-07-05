@@ -50,17 +50,18 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
-def list_books(choice, books_menu, patron_menu):
+def list_books(p_choice, books_menu, patron_menu):
     sql = """
         SELECT *
         FROM books
         WHERE patron_id = ?
     """
-    rows = CURSOR.execute(sql, (choice,)).fetchall()
+    print(p_choice)
+    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     if rows:
         for i, row in enumerate(rows, start=1):
             print(f"{i}. {row[1]}")
-        books_menu()
+        books_menu(p_choice)
     else:
         print("Patron has no books")
         list_patrons()

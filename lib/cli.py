@@ -37,17 +37,18 @@ def patron_menu():
     print("Press B or b to go back to the previous menu")
     print("Press A or a to add a new patron")
     print("Press E or e to exit")
-    choice = input("> ")
-    if choice.isdigit() and int(choice) <= Patron.table_length():
-        list_books(int(choice), books_menu, patron_menu)
-        books_menu()
-    elif choice == "B" or choice == "b":
+    p_choice = input("> ")
+    if p_choice.isdigit() and int(p_choice) <= Patron.table_length():
+        list_books(int(p_choice), books_menu, patron_menu)
+        books_menu(p_choice)
+        return
+    elif p_choice == "B" or p_choice == "b":
         main()
-    elif choice == "A" or choice == "a":
+    elif p_choice == "A" or p_choice == "a":
         add_new_patron()
         list_patrons()
         patron_menu()
-    elif choice == "E" or choice == "e":
+    elif p_choice == "E" or p_choice == "e":
         exit_program()
     else:
         print("Please make a valid selection")
@@ -55,26 +56,26 @@ def patron_menu():
         patron_menu()
 
     
-def books_menu():
+def books_menu(p_choice):
     print("Please select the number of the book to its details")
     print("        or")
     print("Press B or b to go back to the previous menu")
     print("Press A or a to add a new book for this patron")
     print("Press D or d to delete this patron")
     print("Press E or e to exit")
-    choice = input("> ")
-    if choice.isdigit() and int(choice) <= Patron.table_length():
-        list_books(choice)
-    elif choice == "B" or choice == "b":
+    b_choice = input("> ")
+    if b_choice.isdigit() and int(b_choice) <= Patron.table_length():
+        list_books(books_menu, patron_menu, p_choice)
+    elif b_choice == "B" or b_choice == "b":
         list_patrons()
         patron_menu()
-    elif choice == "A" or choice == "a":
+    elif b_choice == "A" or b_choice == "a":
         add_new_patron()
         books_menu()
-    elif choice == "D" or choice == "d":
+    elif b_choice == "D" or b_choice == "d":
         update_patron()
         patron_menu()
-    elif choice == "E" or choice == "e":
+    elif b_choice == "E" or b_choice == "e":
         exit_program()
     else:
         print("Please make a valid selection")

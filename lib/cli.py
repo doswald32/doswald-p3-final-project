@@ -75,7 +75,7 @@ def books_menu(p_choice):
     print("Press E or e to exit")
     b_choice = input("> ")
     if b_choice.isdigit() and int(b_choice) <= Patron.table_length():
-        display_book_info(p_choice)
+        display_book_info(p_choice, b_choice)
         list_books(p_choice, books_menu, patron_menu)
     elif b_choice == "B" or b_choice == "b":
         list_patrons()

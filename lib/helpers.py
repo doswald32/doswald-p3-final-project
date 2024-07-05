@@ -74,14 +74,20 @@ def add_new_patron():
     Patron.create(first_name, last_name, age)
 
 
-def display_book_info(p_choice):
+def display_book_info(p_choice, b_choice):
     sql = """
         SELECT * 
         FROM books
         WHERE patron_id = ?
     """
-    rows = CURSOR.execute(sql, (p_choice,))
-    print(rows)
+    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
+    i = int(b_choice) - 1
+    print("")
+    print(f"Title: {rows[i][1]}")
+    print(f"Author: {rows[i][2]}")
+    print(f"Pages: {rows[i][3]}")
+    print(f"Description: {rows[i][4]}")
+    print("")
 
 
 def print_choice_name(p_choice):
@@ -100,14 +106,8 @@ def add_new_book(title, author, pages, description, p_choice):
     Book.create(title, author, pages, description, p_choice)
 
 
-def delete_patron(p_choice):
-    sql = """
-        SELECT * 
-        FROM patrons 
-        WHERE id = ?
-    """
-    patron = CURSOR.execute(sql, (p_choice,)).fetchone()
-    return patron
+def delete_patron():
+    return Patron.all[0]
 
 
 def exit_program():

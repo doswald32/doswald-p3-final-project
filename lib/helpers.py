@@ -56,7 +56,6 @@ def list_books(p_choice, books_menu, patron_menu):
         FROM books
         WHERE patron_id = ?
     """
-    print(p_choice)
     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     if rows:
         for i, row in enumerate(rows, start=1):
@@ -75,7 +74,45 @@ def add_new_patron():
     Patron.create(first_name, last_name, age)
 
 
+def display_book_info(p_choice):
+    sql = """
+        SELECT * 
+        FROM books
+        WHERE patron_id = ?
+    """
+    rows = CURSOR.execute(sql, (p_choice,))
+    print(rows)
+
+
+def print_choice_name(p_choice):
+    sql = """
+        SELECT * 
+        FROM patrons
+        WHERE id = ?
+    """
+    row = CURSOR.execute(sql, (p_choice,)).fetchone()
+    print("")
+    print(f"{row[1]} {row[2]}")
+    print("")
+
+
+def add_new_book(title, author, pages, description, p_choice):
+    Book.create(title, author, pages, description, p_choice)
+
+
+def delete_patron(p_choice):
+    sql = """
+        SELECT * 
+        FROM patrons 
+        WHERE id = ?
+    """
+    patron = CURSOR.execute(sql, (p_choice,)).fetchone()
+    return patron
+
+
 def exit_program():
+    print("")
     print("Goodbye!")
+    print("")
     exit()
 

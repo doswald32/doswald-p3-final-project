@@ -11,10 +11,6 @@ from helpers import *
 
 seed_database()
 
-steve = Patron.find_by_first_name("Steve")
-steve.update()
-patron_menu()
-
 ipdb.set_trace()
 
 

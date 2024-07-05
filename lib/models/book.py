@@ -79,7 +79,7 @@ class Book():
         if type(patron_id) is int and Patron.find_by_id(patron_id):
             self._patron_id = patron_id
         else:
-            raise ValueError("department_id must reference a department in the database")
+            raise ValueError("patron_id must reference a patron in the database")
 
 
     @classmethod
@@ -195,3 +195,13 @@ class Book():
         """
         row = CURSOR.execute(sql, (title,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
+
+    @classmethod
+    def table_length(cls):
+        sql = """
+            SELECT *
+            FROM books
+        """
+        rows = CURSOR.execute(sql).fetchall()
+        return int(len(rows))

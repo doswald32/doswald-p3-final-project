@@ -2,6 +2,7 @@
 #!/user/bin/env python3
 
 from models.patron import Patron
+from models.book import Book
 from helpers import (
     exit_program,
     list_patrons,
@@ -11,7 +12,8 @@ from helpers import (
     display_book_info,
     print_choice_name,
     add_new_book,
-    delete_patron
+    delete_patron,
+    delete_book
 )
 
 
@@ -74,26 +76,30 @@ def books_menu(p_choice):
     print("Press D or d to delete this patron")
     print("Press E or e to exit")
     b_choice = input("> ")
-    if b_choice.isdigit() and int(b_choice) <= Patron.table_length():
+    if b_choice.isdigit() and int(b_choice) <= Book.table_length():
         display_book_info(p_choice, b_choice)
-        single_book_menu(p_choice, b_choice)
-    elif b_choice == "B" or b_choice == "b":
-        list_patrons()
-        patron_menu()
+        single_book_menu(p_choice)
     elif b_choice == "A" or b_choice == "a":
         title = input("Enter book's title: ")
         author = input("Enter book's author: ")
         pages = int(input("Enter number of pages: "))
         description = input("Enter brief description: ")
-        add_new_book(title, author, pages, description, p_choice)
+        add_new_book(title, author, pages, description, int(p_choice))
+        print_choice_name(p_choice)
         list_books(p_choice, books_menu, patron_menu)
+    elif b_choice == "B" or b_choice == "b":
+        list_patrons()
+        patron_menu()
     elif b_choice == "D" or b_choice == "d":
         delete_patron(p_choice)
+        list_patrons()
+        patron_menu()
     elif b_choice == "E" or b_choice == "e":
         exit_program()
     else:
         print("Please make a valid selection")
-        books_menu(p_choice)
+        print_choice_name(p_choice)
+        list_books(int(p_choice), books_menu, patron_menu)
 
 def single_book_menu(p_choice):
     print("")
@@ -104,8 +110,13 @@ def single_book_menu(p_choice):
     print("Press E or e to exit")
     f_choice = input("> ")
     if f_choice == "B" or f_choice == "b":
+        print_choice_name(p_choice)
         list_books(p_choice, books_menu, patron_menu)
         books_menu(p_choice)
+    elif f_choice == "D" or f_choice == "d":
+        delete_book()
+    elif f_choice == "E" or f_choice == "e":
+        exit_program()
     else:
         print("Please make a valid selection")
         books_menu()

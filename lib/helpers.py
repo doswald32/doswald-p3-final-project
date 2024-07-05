@@ -9,8 +9,8 @@ def list_patrons():
     patrons = Patron.get_all()
     print("**********")
     print("")
-    for patron in patrons:
-        print(f"{patron.id}. {patron.first_name} {patron.last_name}, {patron.age}")
+    for i, patron in enumerate(patrons, start=1):
+        print(f"{i}. Patron ID: {patron.id} {patron.first_name} {patron.last_name}, {patron.age}")
     print("")
     print("**********")
     print("")
@@ -62,9 +62,10 @@ def list_books(p_choice, books_menu, patron_menu):
             print(f"{i}. {row[1]}")
         books_menu(p_choice)
     else:
+        print("")
         print("Patron has no books")
+        print("")
         list_patrons()
-        patron_menu()
 
 
 def add_new_patron():
@@ -82,32 +83,60 @@ def display_book_info(p_choice, b_choice):
     """
     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     i = int(b_choice) - 1
+    print(rows)
     print("")
     print(f"Title: {rows[i][1]}")
     print(f"Author: {rows[i][2]}")
     print(f"Pages: {rows[i][3]}")
     print(f"Description: {rows[i][4]}")
+    print(f"ID: {rows[i][0]}")
     print("")
+    book_id = int(rows[i][0])
+    return book_id
 
 
 def print_choice_name(p_choice):
     sql = """
+        WITH NumberedRows AS (
+            SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNum
+            FROM patrons
+        )
         SELECT * 
         FROM patrons
         WHERE id = ?
     """
+    print(p_choice)
     row = CURSOR.execute(sql, (p_choice,)).fetchone()
     print("")
     print(f"{row[1]} {row[2]}")
     print("")
 
 
-def add_new_book(title, author, pages, description, p_choice):
-    Book.create(title, author, pages, description, p_choice)
+def add_new_book(title, author, pages, description, patron_id):
+    Book.create(title, author, pages, description, patron_id)
 
 
-def delete_patron():
-    return Patron.all[0]
+def delete_patron(p_choice):
+    sql = """
+        DELETE FROM patrons
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (p_choice,))
+    CONN.commit()
+    print("")
+    print("Patron successfully deleted")
+    print("")
+
+
+def delete_book(p_choice):
+    sql = """
+        SELECT * 
+        FROM books
+        WHERE patron_id = ?
+    """
+    print(p_choice)
+    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
+    print(type(rows[1]))
 
 
 def exit_program():

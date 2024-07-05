@@ -127,6 +127,7 @@ def delete_patron(p_choice):
     print("")
     print("Patron successfully deleted")
     print("")
+    list_patrons()
 
 
 def delete_book(p_choice):

@@ -87,8 +87,9 @@ def no_books_menu(p_choice):
         add_new_book(title, author, pages, description, int(p_choice))
         print_choice_name(p_choice)
         list_books(p_choice, books_menu, patron_menu)
-    elif choice == "B" or choice == "b":
-        pass
+    elif choice == "D" or choice == "d":
+        delete_patron(p_choice)
+        patron_menu()
     elif choice == "E" or choice == "e":
         exit_program()
     else:

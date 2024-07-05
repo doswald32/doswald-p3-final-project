@@ -67,7 +67,7 @@ def patron_menu():
     
 def books_menu(p_choice):
     print("")
-    print("Please select the number of the book to its details")
+    print("Please select the number of the book to see its details")
     print("        or")
     print("Press B or b to go back to the previous menu")
     print("Press A or a to add a new book for this patron")
@@ -76,7 +76,7 @@ def books_menu(p_choice):
     b_choice = input("> ")
     if b_choice.isdigit() and int(b_choice) <= Patron.table_length():
         display_book_info(p_choice, b_choice)
-        list_books(p_choice, books_menu, patron_menu)
+        single_book_menu(p_choice, b_choice)
     elif b_choice == "B" or b_choice == "b":
         list_patrons()
         patron_menu()
@@ -91,6 +91,21 @@ def books_menu(p_choice):
         delete_patron(p_choice)
     elif b_choice == "E" or b_choice == "e":
         exit_program()
+    else:
+        print("Please make a valid selection")
+        books_menu(p_choice)
+
+def single_book_menu(p_choice):
+    print("")
+    print("Please select an option")
+    print("")
+    print("Press B or b to go back to the previous menu")
+    print("Press D or d to delete this book")
+    print("Press E or e to exit")
+    f_choice = input("> ")
+    if f_choice == "B" or f_choice == "b":
+        list_books(p_choice, books_menu, patron_menu)
+        books_menu(p_choice)
     else:
         print("Please make a valid selection")
         books_menu()

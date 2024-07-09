@@ -134,6 +134,9 @@ class Book():
         """
         CURSOR.execute(sql, (self.title, self.author, self.pages, self.description, self.patron_id, self.id))
         CONN.commit()
+        print("")
+        print("Book successfully updated.")
+        print("")
 
 
     def delete(self):
@@ -143,7 +146,9 @@ class Book():
         """
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
-
+        print("")
+        print("Book successfully deleted.")
+        print("")
         del type(self).all[self.id]
         self.id = None
 

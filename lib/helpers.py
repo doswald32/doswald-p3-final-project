@@ -102,7 +102,6 @@ def print_choice_name(p_choice):
         FROM patrons
         WHERE id = ?
     """
-    print(p_choice)
     row = CURSOR.execute(sql, (p_choice,)).fetchone()
     print("")
     print(f"{row[1]} {row[2]}")
@@ -143,27 +142,17 @@ def delete_book(p_choice, b_choice):
     """
     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     book = Book.instance_from_db(rows[int(b_choice) - 1])
-    CONN.commit()
-    print("")
-    print("Book successfully deleted")
-    print("")
-    list_patrons()
     return book
 
 
 def update_book(title, author, pages, description, p_choice, b_choice):
     sql = """
-        UPDATE books
-        SET title = ?, author = ?, pages = ?, description = ?
-        WHERE patron_id = ? AND id = ?
+        SELECT * 
+        FROM books 
+        WHERE patron_id = ?
     """
-    rows = CURSOR.execute("SELECT * FROM books WHERE patron_id = ?", (p_choice,)).fetchall()
-    print(f'Current b_choice: {b_choice}')
+    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     index = int(b_choice) - 1
-    print(f'Index (b_choice - 1): {index}')
-    print(f'Index type: {type(index)}')
-    example_title = rows[index][1]
-    print(example_title)
     if title == "":
         title = rows[index][1]
     if author == "":
@@ -172,14 +161,8 @@ def update_book(title, author, pages, description, p_choice, b_choice):
         pages = rows[index][3]
     if description == "":
         description = rows[index][4]
-    print("out of if statements")
-    CURSOR.execute(sql, (title, author, pages, description, p_choice, b_choice))
-    CONN.commit()
-    print("")
-    print("Book updated")
-    print("")
-
-
+    book = Book.instance_from_db(rows[index])
+    return book
 
 
 def exit_program():

@@ -113,7 +113,7 @@ def books_menu(p_choice):
     elif b_choice == "A" or b_choice == "a":
         title = input("Enter book's title: ")
         author = input("Enter book's author: ")
-        pages = int(input("Enter number of pages: "))
+        pages = input("Enter number of pages: ")
         description = input("Enter brief description: ")
         add_new_book(title, author, pages, description, int(p_choice))
         print_choice_name(p_choice)
@@ -146,19 +146,22 @@ def single_book_menu(p_choice, b_choice):
         books_menu(p_choice)
     elif f_choice == "D" or f_choice == "d":
         delete_book(p_choice, b_choice).delete()
+        list_patrons()
         patron_menu()
     elif f_choice == "U" or f_choice == "u":
         title = input("Enter book's title: ")
         author = input("Enter book's author: ")
         pages = input("Enter number of pages: ")
         description = input("Enter book description: ")
-        update_book(title, author, pages, description, p_choice, b_choice)
+        update_book(title, author, pages, description, p_choice, b_choice).update()
         list_books(p_choice, books_menu, patron_menu)
     elif f_choice == "E" or f_choice == "e":
         exit_program()
     else:
+        print("")
         print("Please make a valid selection")
-        books_menu(p_choice)
+        print("")
+        list_books(int(p_choice), books_menu, patron_menu)
          
 
 if __name__ == "__main__":

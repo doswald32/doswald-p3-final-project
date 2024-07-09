@@ -7,12 +7,12 @@ class Book():
 
 
     def __init__(self, title, author, pages, description, patron_id, id=None):
-        self.id = id
         self.title = title
         self.author = author
         self.pages = pages
         self.description = description
         self.patron_id = patron_id
+        self.id = id
 
 
     def __repr__(self):
@@ -127,7 +127,6 @@ class Book():
     
 
     def update(self, title, author, pages, description, patron_id):
-        breakpoint()
         sql = """
             UPDATE books
             SET title = ?, author = ?, pages = ?, description = ?, patron_id = ?
@@ -177,7 +176,6 @@ class Book():
             FROM books
         """
         rows = CURSOR.execute(sql).fetchall()
-        print(rows)
         return [cls.instance_from_db(row) for row in rows]
     
 

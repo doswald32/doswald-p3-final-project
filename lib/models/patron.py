@@ -58,10 +58,8 @@ class Patron:
             SELECT * FROM books
             WHERE patron_id = ?
         """
-        print(f"Patron ID: {self.id}")
         CURSOR.execute(sql, (self.id,))
         rows = CURSOR.fetchall()
-        # print(f"Rows: {rows}")
         return [Book.instance_from_db(row) for row in rows]
 
 
@@ -111,14 +109,14 @@ class Patron:
         return patron
 
 
-    def update(self):
+    def update(self, first_name, last_name, age):
         """ Updates table row associated with the Patron instance, not the object itself. """
         sql = """
             UPDATE patrons 
             SET first_name = ?, last_name = ?, age = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.first_name, self.last_name, self.age, self.id))
+        CURSOR.execute(sql, (first_name, last_name, age, self.id))
         CONN.commit()
 
     

@@ -9,7 +9,6 @@ from helpers import (
     list_books,
     add_new_patron,
     display_book_info,
-    # print_choice_name
     add_new_book,
     delete_patron,
     delete_book,
@@ -29,6 +28,7 @@ def main():
     elif choice == "E" or choice == "e":
         exit_program()
     else:
+        print("")
         print("Please make a valid selection")
         main()
             
@@ -56,9 +56,6 @@ def patron_menu():
         print("\n", patron.first_name, patron.last_name, "\n")
         list_books(patron)
         books_menu(patron)
-        # print_choice_name(p_choice)
-        # list_books(int(p_choice), books_menu, no_books_menu)
-        # books_menu(p_choice)
     elif p_choice == "B" or p_choice == "b":
         main()
     elif p_choice == "A" or p_choice == "a":
@@ -70,6 +67,7 @@ def patron_menu():
     elif p_choice == "E" or p_choice == "e":
         exit_program()
     else:
+        print("")
         print("Please make a valid selection")
         print("")
         list_patrons()
@@ -77,37 +75,37 @@ def patron_menu():
         patron_menu()
 
     
-def no_books_menu(p_choice):
-    print("")
-    print("Please make a selection")
-    print("")
-    print("Press B or b to go back to the previous menu")
-    print("Press A or a to add a new book for this patron")
-    print("Press D or d to delete this patron")
-    print("Press E or e to exit")
-    choice = input("> ")
-    patron = Patron.get_all()[int(p_choice) - 1]
-    if choice == "B" or choice == "b":
-        print("")
-        list_patrons()
-        print("")
-        patron_menu()
-    elif choice == "A" or choice == "a":
-        title = input("Enter book's title: ")
-        author = input("Enter book's author: ")
-        pages = int(input("Enter number of pages: "))
-        description = input("Enter brief description: ")
-        add_new_book(title, author, pages, description, int(p_choice))
-        print("\n", patron.first_name, patron.last_name, "\n")
-        list_books(p_choice, books_menu, patron_menu)
-    elif choice == "D" or choice == "d":
-        delete_patron(p_choice)
-        patron_menu()
-    elif choice == "E" or choice == "e":
-        exit_program()
-    else:
-        print("Please make a valid selection")
-        list_books(int(p_choice), books_menu, no_books_menu)
+# def no_books_menu(p_choice):
+#     print("")
+#     print("Please make a selection")
+#     print("")
+#     print("Press B or b to go back to the previous menu")
+#     print("Press A or a to add a new book for this patron")
+#     print("Press D or d to delete this patron")
+#     print("Press E or e to exit")
+#     choice = input("> ")
+#     patron = Patron.get_all()[int(p_choice) - 1]
+#     if choice == "B" or choice == "b":
+#         print("")
+#         list_patrons()
+#         print("")
+#         patron_menu()
+#     elif choice == "A" or choice == "a":
+#         title = input("Enter book's title: ")
+#         author = input("Enter book's author: ")
+#         pages = int(input("Enter number of pages: "))
+#         description = input("Enter brief description: ")
+#         add_new_book(title, author, pages, description, int(p_choice))
+#         print("\n", patron.first_name, patron.last_name, "\n")
+#         list_books(p_choice, books_menu, patron_menu)
+#     elif choice == "D" or choice == "d":
+#         delete_patron(p_choice)
+#         patron_menu()
+#     elif choice == "E" or choice == "e":
+#         exit_program()
+#     else:
+#         print("Please make a valid selection")
+#         list_books(int(p_choice), books_menu, no_books_menu)
 
 
 def books_menu(patron):
@@ -122,14 +120,14 @@ def books_menu(patron):
     book = Book.get_all()[int(patron.id) - 1]
     if b_choice.isdigit() and int(b_choice) <= Book.table_length():
         print_book_details(book)
-        single_book_menu(book)
+        single_book_menu(patron, book)
     elif b_choice == "A" or b_choice == "a":
         title = input("Enter book's title: ")
         author = input("Enter book's author: ")
         pages = input("Enter number of pages: ")
         description = input("Enter brief description: ")
         add_new_book(title, author, pages, description, int(p_choice))
-        print_choice_name(p_choice)
+        print("\n", patron.first_name, patron.last_name, "\n")
         list_books(p_choice, books_menu, patron_menu)
     elif b_choice == "B" or b_choice == "b":
         print("")
@@ -146,7 +144,7 @@ def books_menu(patron):
         print_choice_name(p_choice)
         list_books(int(p_choice), books_menu, patron_menu)
 
-def single_book_menu(book):
+def single_book_menu(patron, book):
     print("")
     print("Please select an option")
     print("")
@@ -156,9 +154,9 @@ def single_book_menu(book):
     print("Press E or e to exit")
     f_choice = input("> ")
     if f_choice == "B" or f_choice == "b":
-        print_choice_name(p_choice)
-        list_books(p_choice, books_menu, patron_menu)
-        books_menu(p_choice)
+        print("\n", patron.first_name, patron.last_name, "\n")
+        list_books(patron)
+        books_menu(patron)
     elif f_choice == "D" or f_choice == "d":
         delete_book(p_choice, b_choice).delete()
         print("")

@@ -42,7 +42,8 @@ def list_books(patron):
         for i, book in enumerate(books, start=1):
             print(f' {i}. {book.title}')
     else:
-        pass
+        print("")
+        print(f'{patron.first_name} currently has no books.')
 
         
 def add_new_patron():

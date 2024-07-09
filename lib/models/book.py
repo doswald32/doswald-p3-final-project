@@ -126,13 +126,14 @@ class Book():
             return book
     
 
-    def update(self):
+    def update(self, title, author, pages, description, patron_id):
+        breakpoint()
         sql = """
             UPDATE books
             SET title = ?, author = ?, pages = ?, description = ?, patron_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.title, self.author, self.pages, self.description, self.patron_id, self.id))
+        CURSOR.execute(sql, (title, author, pages, description, patron_id, self.id))
         CONN.commit()
         print("")
         print("Book successfully updated.")

@@ -6,7 +6,6 @@ from models.book import Book
 from helpers import (
     exit_program,
     list_patrons,
-    update_patron,
     list_books,
     add_new_patron,
     display_book_info,
@@ -31,7 +30,6 @@ def main():
         main()
             
 
-
 def main_menu():
     print("")
     print("WELCOME!")
@@ -51,7 +49,10 @@ def patron_menu():
     print("Press E or e to exit")
     p_choice = input("> ")
     if p_choice.isdigit() and int(p_choice) <= Patron.table_length():
-        print_choice_name(p_choice)
+        patron = Patron.get_all()[int(p_choice) - 1]
+        print(patron.first_name, patron.last_name)
+        list_books(patron)
+        # print_choice_name(p_choice)
         list_books(int(p_choice), books_menu, no_books_menu)
         # books_menu(p_choice)
     elif p_choice == "B" or p_choice == "b":
@@ -149,12 +150,20 @@ def single_book_menu(p_choice, b_choice):
         list_patrons()
         patron_menu()
     elif f_choice == "U" or f_choice == "u":
+        # I have patron and I have book passed in
         title = input("Enter book's title: ")
+        if title == "":
+            title = book.title
         author = input("Enter book's author: ")
         pages = input("Enter number of pages: ")
         description = input("Enter book description: ")
-        update_book(title, author, pages, description, p_choice, b_choice).update()
+        breakpoint()
+        book.update(title, author, pages, description, patron.id)
         list_books(p_choice, books_menu, patron_menu)
+        if len(patron.books()) > 0:
+            books_menu(patron)
+        else:
+            patron_menu()
     elif f_choice == "E" or f_choice == "e":
         exit_program()
     else:

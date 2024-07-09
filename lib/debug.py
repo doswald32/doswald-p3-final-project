@@ -2,7 +2,6 @@
 # lib/debug.py
 
 from seed import seed_database
-from cli import patron_menu
 import ipdb
 
 from models.book import Book

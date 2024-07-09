@@ -2,6 +2,7 @@
 
 from models.patron import Patron
 from models.book import Book
+# from cli import books_menu, patron_menu
 from models.__init__ import CURSOR, CONN
 
 
@@ -51,16 +52,18 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
-def list_books(p_choice, books_menu, no_books_menu):
-    sql = """
-        SELECT *
-        FROM books
-        WHERE patron_id = ?
-    """
-    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-    if rows:
-        for i, row in enumerate(rows, start=1):
-            print(f"{i}. {row[1]}")
+def list_books(patron):
+    # sql = """
+    #     SELECT *
+    #     FROM books
+    #     WHERE patron_id = ?
+    # """
+    # breakpoint()
+    books = patron.books()
+    # rows = CURSOR.execute(sql, (p_choice,)).fetchall()
+    if len(books) > 0:
+        for i, book in enumerate(books, start=1):
+            print(f' {i}. {book.title}')
         books_menu(p_choice)
     else:
         print("")
@@ -100,11 +103,11 @@ def print_choice_name(p_choice):
     sql = """
         SELECT * 
         FROM patrons
-        WHERE id = ?
     """
-    row = CURSOR.execute(sql, (p_choice,)).fetchone()
+    index = int(p_choice) - 1
+    rows = CURSOR.execute(sql).fetchall()
     print("")
-    print(f"{row[1]} {row[2]}")
+    print(f'{rows[index][1]} {rows[index][2]}')
     print("")
 
 
@@ -162,6 +165,7 @@ def update_book(title, author, pages, description, p_choice, b_choice):
     if description == "":
         description = rows[index][4]
     book = Book.instance_from_db(rows[index])
+    breakpoint()
     return book
 
 

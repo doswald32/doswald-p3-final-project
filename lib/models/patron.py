@@ -53,7 +53,7 @@ class Patron:
 
 
     def books(self):
-        from lib.models.book import Book
+        from models.book import Book
         sql = """
             SELECT * FROM books
             WHERE patron_id = ?
@@ -62,11 +62,7 @@ class Patron:
         CURSOR.execute(sql, (self.id,))
         rows = CURSOR.fetchall()
         # print(f"Rows: {rows}")
-        books = [Book.instance_from_db(row) for row in rows]
-        for i, book in enumerate(books, start=1):
-            print(f"{i}. {book.title}")
-        # print(f"Books: {books}")
-        # return books
+        return [Book.instance_from_db(row) for row in rows]
 
 
     @classmethod
@@ -199,4 +195,6 @@ class Patron:
         """
         rows = CURSOR.execute(sql).fetchall()
         return int(len(rows))
+    
+
         

@@ -171,7 +171,7 @@ class Book():
             FROM books
         """
         rows = CURSOR.execute(sql).fetchall()
-
+        print(rows)
         return [cls.instance_from_db(row) for row in rows]
     
 

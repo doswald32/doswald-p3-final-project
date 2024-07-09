@@ -145,7 +145,7 @@ def single_book_menu(p_choice, b_choice):
         list_books(p_choice, books_menu, patron_menu)
         books_menu(p_choice)
     elif f_choice == "D" or f_choice == "d":
-        delete_book(p_choice)
+        delete_book(p_choice, b_choice).delete()
         patron_menu()
     elif f_choice == "U" or f_choice == "u":
         title = input("Enter book's title: ")

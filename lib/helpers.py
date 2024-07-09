@@ -9,8 +9,8 @@ def list_patrons():
     patrons = Patron.get_all()
     print("**********")
     print("")
-    for patron in patrons:
-        print(f"Patron ID: {patron.id} {patron.first_name} {patron.last_name}, {patron.age}")
+    for i, patron in enumerate(patrons, start=1):
+        print(f"{i}. {patron.first_name} {patron.last_name}, {patron.age}")
     print("")
     print("**********")
     print("")
@@ -98,10 +98,6 @@ def display_book_info(p_choice, b_choice):
 
 def print_choice_name(p_choice):
     sql = """
-        WITH NumberedRows AS (
-            SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RowNum
-            FROM patrons
-        )
         SELECT * 
         FROM patrons
         WHERE id = ?
@@ -130,17 +126,19 @@ def delete_patron(p_choice):
     list_patrons()
 
 
-def delete_book(p_choice):
+def delete_book(p_choice, b_choice):
     sql = """
-        DELETE FROM books
-        WHERE id = ?
+        SELECT *
+        FROM books
+        WHERE patron_id = ?
     """
-    CURSOR.execute(sql, (p_choice,))
-    CONN.commit()
+    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
+    book = Book.instance_from_db(rows[int(b_choice) - 1])
     print("")
     print("Book successfully deleted")
     print("")
     list_patrons()
+    return book
 
 
 def update_book(title, author, pages, description, p_choice, b_choice):

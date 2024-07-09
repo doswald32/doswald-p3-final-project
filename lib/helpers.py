@@ -16,21 +16,22 @@ def list_patrons():
     print("")
 
 
-def patron_details():
-    try:
-        id = int(input("Enter the ID of the patron: "))
-        patron = Patron.find_by_id(id)
-        if patron:
-            print("**********")
-            print("")
-            print(f"{patron.id}. {patron.first_name} {patron.last_name}, {patron.age}")
-            print("")
-            print("**********")
-            print("")
-        else:
-            print("Patron not found.")
-    except ValueError:
-        print("Invalid ID. Please enter valid integer.")
+# def patron_details():
+#     try:
+#         id = int(input("Enter the ID of the patron: "))
+#         patron = Patron.find_by_id(id)
+#         if patron:
+#             print("**********")
+#             print("")
+#             print(f"{patron.id}. {patron.first_name} {patron.last_name}, {patron.age}")
+#             print("")
+#             print("**********")
+#             print("")
+#         else:
+#             print("Patron not found.")
+#     except ValueError:
+#         print("Invalid ID. Please enter valid integer.")
+
 
 def update_patron():
     id_ = input("Enter the patron's id: ")
@@ -50,7 +51,7 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
-def list_books(p_choice, books_menu, no_book_menu):
+def list_books(p_choice, books_menu, no_books_menu):
     sql = """
         SELECT *
         FROM books
@@ -65,7 +66,7 @@ def list_books(p_choice, books_menu, no_book_menu):
         print("")
         print("Patron has no books")
         print("")
-        no_book_menu(p_choice)
+        no_books_menu(p_choice)
         
 
 
@@ -142,13 +143,13 @@ def delete_book(p_choice):
     list_patrons()
 
 
-def update_book(title, author, pages, description, p_choice):
+def update_book(title, author, pages, description, p_choice, b_choice):
     sql = """
         UPDATE books
         SET title = ?, author = ?, pages = ?, description = ?
-        WHERE id = ?
+        WHERE patron_id = ? AND id = ?
     """
-    CURSOR.execute(sql, (title, author, pages, description, p_choice))
+    CURSOR.execute(sql, (title, author, pages, description, p_choice, b_choice))
     CONN.commit()
     print("")
     print("Book updated")

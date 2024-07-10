@@ -12,7 +12,7 @@ from helpers import (
     add_new_book,
     delete_patron,
     delete_book,
-    # update_book,
+    update_book,
     print_book_details
 )
 
@@ -142,6 +142,7 @@ def books_menu(patron):
         print("Please make a valid selection")
         print("\n", patron.first_name, patron.last_name, "\n")
         list_books(patron)
+        books_menu(patron)
 
 def single_book_menu(patron, book):
     print("")
@@ -163,15 +164,19 @@ def single_book_menu(patron, book):
         print("")
         patron_menu()
     elif f_choice == "U" or f_choice == "u":
-        if title == "":
-            title = book.title
-        if author == "":
-            author = book.author
-        if pages == "":
-            pages = book.pages
-        if description == "":
-            description = book.description
-        book.update(title, author, pages, description, patron.id)
+        update_book(book, patron)
+        print("")
+        print("Book successfully updated!")
+        print("")
+        # if title == "":
+        #     title = book.title
+        # if author == "":
+        #     author = book.author
+        # if pages == "":
+        #     pages = book.pages
+        # if description == "":
+        #     description = book.description
+        # book.update(title, author, pages, description, patron.id)
         list_books(patron)
         if len(patron.books()) > 0:
             books_menu(patron)
@@ -183,7 +188,8 @@ def single_book_menu(patron, book):
         print("")
         print("Please make a valid selection")
         print("")
-        list_books(int(p_choice), books_menu, patron_menu)
+        list_books(patron)
+        books_menu(patron)
          
 
 if __name__ == "__main__":

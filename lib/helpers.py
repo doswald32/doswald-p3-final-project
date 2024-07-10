@@ -47,11 +47,11 @@ def update_patron():
         print(f'Patron {id_} not found')
 
 
-def update_book(book):
+def update_book(book, patron):
     title = input("Enter new title (if title hasn't changed, leave it blank and press <ENTER>): ")
-    author = input("Enter new title (if author hasn't changed, leave it blank and press <ENTER>): ")
-    pages = input("Enter new title (if pages haven't changed, leave it blank and press <ENTER>): ")
-    description = input("Enter new title (if description hasn't changed, leave it blank and press <ENTER>): ")
+    author = input("Enter new author (if author hasn't changed, leave it blank and press <ENTER>): ")
+    pages = input("Enter new page total (if pages haven't changed, leave it blank and press <ENTER>): ")
+    description = input("Enter new description (if description hasn't changed, leave it blank and press <ENTER>): ")
     if title == "":
         title = book.title
     if author == "":
@@ -60,6 +60,7 @@ def update_book(book):
         pages = book.pages
     if description == "":
         description = book.description
+    book.update(title, author, int(pages), description, patron.id)
     
         
 def add_new_patron():

@@ -8,10 +8,10 @@ from helpers import (
     list_patrons,
     list_books,
     add_new_patron,
-    # display_book_info,
     add_new_book,
     delete_patron,
     delete_book,
+    update_patron,
     update_book,
     print_book_details
 )
@@ -113,6 +113,7 @@ def books_menu(patron):
     print("Please select the number of a book to see its details. If a patron has no books, select one of the options below.")
     print("")
     print("Press B or b to go back to the previous menu")
+    print("Press U or u to update this patron")
     print("Press A or a to add a new book for this patron")
     print("Press D or d to delete this patron")
     print("Press E or e to exit")
@@ -121,6 +122,19 @@ def books_menu(patron):
         book = patron.books()[int(b_choice) - 1]
         print_book_details(book)
         single_book_menu(patron, book)
+    elif b_choice == "B" or b_choice == "b":
+        print("")
+        list_patrons()
+        print("")
+        patron_menu()
+    elif b_choice == "U" or b_choice == "u":
+        update_patron(patron)
+        print("")
+        print("Patron successfully updated!")
+        print("")
+        list_patrons()
+        print("")
+        patron_menu()
     elif b_choice == "A" or b_choice == "a":
         add_new_book(patron)
         print("\n", patron.first_name, patron.last_name, "\n")
@@ -128,11 +142,6 @@ def books_menu(patron):
         list_books(patron)
         print("")
         books_menu(patron)
-    elif b_choice == "B" or b_choice == "b":
-        print("")
-        list_patrons()
-        print("")
-        patron_menu()
     elif b_choice == "D" or b_choice == "d":
         delete_patron(p_choice)
         patron_menu()
@@ -168,15 +177,6 @@ def single_book_menu(patron, book):
         print("")
         print("Book successfully updated!")
         print("")
-        # if title == "":
-        #     title = book.title
-        # if author == "":
-        #     author = book.author
-        # if pages == "":
-        #     pages = book.pages
-        # if description == "":
-        #     description = book.description
-        # book.update(title, author, pages, description, patron.id)
         list_books(patron)
         if len(patron.books()) > 0:
             books_menu(patron)

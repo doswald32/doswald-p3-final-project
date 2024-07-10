@@ -29,22 +29,17 @@ def print_book_details(book):
     print(f'Description: {book.description}')
 
 
-def update_patron():
-    id_ = input("Enter the patron's id: ")
-    if patron := Patron.find_by_id(id_):
-        try:
-            first_name = input("Enter patron's new first name: ")
-            patron.first_name = first_name
-            last_name = input("Enter patron's new last name: ")
-            patron.last_name = last_name
-            age = int(input("Enter patron's new age: "))
-            patron.age = age
-            patron.update()
-            print(f'Success: {patron}')
-        except Exception as exc:
-            print("Error updating patron: ", exc)
-    else:
-        print(f'Patron {id_} not found')
+def update_patron(patron):
+    first_name = input("Enter new first name (if first name hasn't changed, leave it blank and press <ENTER>): ")
+    last_name = input("Enter new last name (if last name hasn't changed, leave it blank and press <ENTER>): ")
+    age = input("Enter new age (if age hasn't changed, leave it blank and press <ENTER>): ")
+    if first_name == "":
+        first_name = patron.first_name
+    if last_name == "":
+        last_name = patron.last_name
+    if age == "":
+        age = patron.age
+    patron.update(first_name, last_name, age)
 
 
 def update_book(book, patron):
@@ -71,10 +66,12 @@ def add_new_patron():
 
 def add_new_book(patron):
     title = input("Enter the book's title: ")
+    if title == "":
+            print("Please enter a valid title.")
     author = input("Enter the book's author: ")
-    pages = int(input("Enter the number of pages: "))
+    pages = input("Enter the number of pages: ")
     description = input("Enter a brief description: ")
-    Book.create(title, author, pages, description, patron.id)
+    Book.create(title, author, int(pages), description, patron.id)
 
 
 # def display_book_info(p_choice, b_choice):

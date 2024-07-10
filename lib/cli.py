@@ -45,6 +45,7 @@ def main_menu():
 
 
 def patron_menu():
+    print("")
     print("Please select a patron ID to see their books")
     print("         or")
     print("Press B or b to go back to the previous menu")
@@ -133,12 +134,12 @@ def single_book_menu(patron, book):
     print("Press D or d to delete this book")
     print("Press U or u to update book")
     print("Press E or e to exit")
-    f_choice = input("> ")
-    if f_choice == "B" or f_choice == "b":
+    choice = input("> ")
+    if choice == "B" or choice == "b":
         print("\n", patron.first_name, patron.last_name, "\n")
         list_books(patron)
         books_menu(patron)
-    elif f_choice == "D" or f_choice == "d":
+    elif choice == "D" or choice == "d":
         delete_book(book)
         print("")
         print("Book successfully deleted.")
@@ -146,7 +147,7 @@ def single_book_menu(patron, book):
         list_patrons()
         print("")
         patron_menu()
-    elif f_choice == "U" or f_choice == "u":
+    elif choice == "U" or choice == "u":
         update_book(book, patron)
         print("")
         print("Book successfully updated!")
@@ -156,7 +157,7 @@ def single_book_menu(patron, book):
             books_menu(patron)
         else:
             patron_menu()
-    elif f_choice == "E" or f_choice == "e":
+    elif choice == "E" or choice == "e":
         exit_program()
     else:
         print("")

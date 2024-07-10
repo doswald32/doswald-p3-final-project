@@ -178,15 +178,6 @@ class Patron:
         row = CURSOR.execute(sql, (first_name,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
-
-    # @classmethod
-    # def table_length(cls):
-    #     sql = """
-    #         SELECT *
-    #         FROM patrons
-    #     """
-    #     rows = CURSOR.execute(sql).fetchall()
-    #     return int(len(rows))
     
 
         

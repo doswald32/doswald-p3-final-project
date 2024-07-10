@@ -193,12 +193,3 @@ class Book():
         row = CURSOR.execute(sql, (title,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
-
-    # @classmethod
-    # def table_length(cls):
-    #     sql = """
-    #         SELECT *
-    #         FROM books
-    #     """
-    #     rows = CURSOR.execute(sql).fetchall()
-    #     return int(len(rows))

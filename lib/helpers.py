@@ -64,6 +64,7 @@ def add_new_patron():
     age = int(input("Enter the patron's age: "))
     Patron.create(first_name, last_name, age)
 
+
 def add_new_book(patron):
     title = input("Enter the book's title: ")
     if title == "":

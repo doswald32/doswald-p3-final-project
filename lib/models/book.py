@@ -143,9 +143,6 @@ class Book():
         """
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
-        print("")
-        print("Book successfully deleted.")
-        print("")
         del type(self).all[self.id]
         self.id = None
 

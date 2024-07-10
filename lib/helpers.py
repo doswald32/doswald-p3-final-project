@@ -74,36 +74,7 @@ def add_new_book(patron):
     Book.create(title, author, int(pages), description, patron.id)
 
 
-# def display_book_info(p_choice, b_choice):
-#     sql = """
-#         SELECT * 
-#         FROM books
-#         WHERE patron_id = ?
-#     """
-#     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-#     i = int(b_choice) - 1
-#     print("")
-#     print(f"Title: {rows[i][1]}")
-#     print(f"Author: {rows[i][2]}")
-#     print(f"Pages: {rows[i][3]}")
-#     print(f"Description: {rows[i][4]}")
-#     print(f"ID: {rows[i][0]}")
-#     print("")
-#     book_id = int(rows[i][0])
-#     return book_id
-
-
-
-def delete_patron(p_choice):
-    sql = """   
-        SELECT *
-        FROM books
-        WHERE patron_id = ?
-    """
-    sql2 = """
-        DELETE FROM patrons
-        WHERE id = ?
-    """
+def delete_patron(patron):
     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
     for row in rows:
         book = Book.instance_from_db(row)
@@ -116,22 +87,8 @@ def delete_patron(p_choice):
     list_patrons()
 
 
-def delete_book(p_choice, b_choice):
-    sql = """
-        SELECT *
-        FROM books
-        WHERE patron_id = ?
-    """
-    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-    book = Book.instance_from_db(rows[int(b_choice) - 1])
-    return book
-
-
-# def input_converter():
-#     rows = CURSOR.execute("SELECT * FROM patrons")
-#     return rows
-#     patron = rows[int(p_choice) - 1]
-#     book = CURSOR.execute("SELECT * FROM books WHERE patron_id = ?", (patron.id,))
+def delete_book(book):
+    book.delete()
 
 
 def exit_program():

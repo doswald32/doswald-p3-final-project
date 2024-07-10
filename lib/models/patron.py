@@ -181,7 +181,6 @@ class Patron:
             WHERE first_name = ?
         """
         row = CURSOR.execute(sql, (first_name,)).fetchone()
-        print(type(row))
         return cls.instance_from_db(row) if row else None
     
 

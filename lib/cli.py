@@ -8,11 +8,11 @@ from helpers import (
     list_patrons,
     list_books,
     add_new_patron,
-    display_book_info,
+    # display_book_info,
     add_new_book,
     delete_patron,
     delete_book,
-    update_book,
+    # update_book,
     print_book_details
 )
 
@@ -117,18 +117,17 @@ def books_menu(patron):
     print("Press D or d to delete this patron")
     print("Press E or e to exit")
     b_choice = input("> ")
-    book = Book.get_all()[int(patron.id) - 1]
     if b_choice.isdigit() and int(b_choice) <= Book.table_length():
+        book = patron.books()[int(b_choice) - 1]
         print_book_details(book)
         single_book_menu(patron, book)
     elif b_choice == "A" or b_choice == "a":
-        title = input("Enter book's title: ")
-        author = input("Enter book's author: ")
-        pages = input("Enter number of pages: ")
-        description = input("Enter brief description: ")
-        add_new_book(title, author, pages, description, int(p_choice))
+        add_new_book(patron)
         print("\n", patron.first_name, patron.last_name, "\n")
-        list_books(p_choice, books_menu, patron_menu)
+        print("")
+        list_books(patron)
+        print("")
+        books_menu(patron)
     elif b_choice == "B" or b_choice == "b":
         print("")
         list_patrons()

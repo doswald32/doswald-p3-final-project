@@ -52,28 +52,32 @@ def add_new_patron():
     age = int(input("Enter the patron's age: "))
     Patron.create(first_name, last_name, age)
 
-
-def display_book_info(p_choice, b_choice):
-    sql = """
-        SELECT * 
-        FROM books
-        WHERE patron_id = ?
-    """
-    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-    i = int(b_choice) - 1
-    print("")
-    print(f"Title: {rows[i][1]}")
-    print(f"Author: {rows[i][2]}")
-    print(f"Pages: {rows[i][3]}")
-    print(f"Description: {rows[i][4]}")
-    print(f"ID: {rows[i][0]}")
-    print("")
-    book_id = int(rows[i][0])
-    return book_id
+def add_new_book(patron):
+    title = input("Enter the book's title: ")
+    author = input("Enter the book's author: ")
+    pages = int(input("Enter the number of pages: "))
+    description = input("Enter a brief description: ")
+    Book.create(title, author, pages, description, patron.id)
 
 
-def add_new_book(title, author, pages, description, patron_id):
-    Book.create(title, author, pages, description, patron_id)
+# def display_book_info(p_choice, b_choice):
+#     sql = """
+#         SELECT * 
+#         FROM books
+#         WHERE patron_id = ?
+#     """
+#     rows = CURSOR.execute(sql, (p_choice,)).fetchall()
+#     i = int(b_choice) - 1
+#     print("")
+#     print(f"Title: {rows[i][1]}")
+#     print(f"Author: {rows[i][2]}")
+#     print(f"Pages: {rows[i][3]}")
+#     print(f"Description: {rows[i][4]}")
+#     print(f"ID: {rows[i][0]}")
+#     print("")
+#     book_id = int(rows[i][0])
+#     return book_id
+
 
 
 def delete_patron(p_choice):

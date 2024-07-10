@@ -134,9 +134,6 @@ class Book():
         """
         CURSOR.execute(sql, (title, author, pages, description, patron_id, self.id))
         CONN.commit()
-        print("")
-        print("Book successfully updated.")
-        print("")
 
 
     def delete(self):

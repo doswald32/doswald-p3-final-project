@@ -11,6 +11,16 @@ def list_patrons():
         print(f"{i}. {patron.first_name} {patron.last_name}, {patron.age}")
 
 
+def list_books(patron):
+    books = patron.books()
+    if len(books) > 0:
+        for i, book in enumerate(books, start=1):
+            print(f' {i}. {book.title}')
+    else:
+        print("")
+        print(f'{patron.first_name} currently has no books.')
+
+
 def print_book_details(book):
     print("")
     print(f'Title: {book.title}')
@@ -36,15 +46,21 @@ def update_patron():
     else:
         print(f'Patron {id_} not found')
 
-def list_books(patron):
-    books = patron.books()
-    if len(books) > 0:
-        for i, book in enumerate(books, start=1):
-            print(f' {i}. {book.title}')
-    else:
-        print("")
-        print(f'{patron.first_name} currently has no books.')
 
+def update_book(book):
+    title = input("Enter new title (if title hasn't changed, leave it blank and press <ENTER>): ")
+    author = input("Enter new title (if author hasn't changed, leave it blank and press <ENTER>): ")
+    pages = input("Enter new title (if pages haven't changed, leave it blank and press <ENTER>): ")
+    description = input("Enter new title (if description hasn't changed, leave it blank and press <ENTER>): ")
+    if title == "":
+        title = book.title
+    if author == "":
+        author = book.author
+    if pages == "":
+        pages = book.pages
+    if description == "":
+        description = book.description
+    
         
 def add_new_patron():
     first_name = input("Enter the patron's first name: ")
@@ -112,25 +128,6 @@ def delete_book(p_choice, b_choice):
     book = Book.instance_from_db(rows[int(b_choice) - 1])
     return book
 
-
-def update_book(title, author, pages, description, p_choice, b_choice):
-    sql = """
-        SELECT * 
-        FROM books 
-        WHERE patron_id = ?
-    """
-    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-    index = int(b_choice) - 1
-    if title == "":
-        title = rows[index][1]
-    if author == "":
-        author = rows[index][2]
-    if pages == "":
-        pages = rows[index][3]
-    if description == "":
-        description = rows[index][4]
-    book = Book.instance_from_db(rows[index])
-    return book
 
 # def input_converter():
 #     rows = CURSOR.execute("SELECT * FROM patrons")

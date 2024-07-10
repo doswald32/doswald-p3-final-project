@@ -110,7 +110,6 @@ class Patron:
 
 
     def update(self, first_name, last_name, age):
-        """ Updates table row associated with the Patron instance, not the object itself. """
         sql = """
             UPDATE patrons 
             SET first_name = ?, last_name = ?, age = ?

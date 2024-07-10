@@ -51,7 +51,7 @@ def patron_menu():
     print("Press A or a to add a new patron")
     print("Press E or e to exit")
     p_choice = input("> ")
-    if p_choice.isdigit() and int(p_choice) <= Patron.table_length():
+    if p_choice.isdigit() and int(p_choice) <= len(Patron.get_all()):
         patron = Patron.get_all()[int(p_choice) - 1]
         print("\n", patron.first_name, patron.last_name, "\n")
         list_books(patron)
@@ -117,7 +117,7 @@ def books_menu(patron):
     print("Press D or d to delete this patron")
     print("Press E or e to exit")
     b_choice = input("> ")
-    if b_choice.isdigit() and int(b_choice) <= Book.table_length():
+    if b_choice.isdigit() and int(b_choice) <= len(patron.books()):
         book = patron.books()[int(b_choice) - 1]
         print_book_details(book)
         single_book_menu(patron, book)
@@ -140,8 +140,8 @@ def books_menu(patron):
         exit_program()
     else:
         print("Please make a valid selection")
-        print_choice_name(p_choice)
-        list_books(int(p_choice), books_menu, patron_menu)
+        print("\n", patron.first_name, patron.last_name, "\n")
+        list_books(patron)
 
 def single_book_menu(patron, book):
     print("")
@@ -163,16 +163,16 @@ def single_book_menu(patron, book):
         print("")
         patron_menu()
     elif f_choice == "U" or f_choice == "u":
-        # I have patron and I have book passed in
-        title = input("Enter book's title: ")
         if title == "":
             title = book.title
-        author = input("Enter book's author: ")
-        pages = input("Enter number of pages: ")
-        description = input("Enter book description: ")
-        breakpoint()
+        if author == "":
+            author = book.author
+        if pages == "":
+            pages = book.pages
+        if description == "":
+            description = book.description
         book.update(title, author, pages, description, patron.id)
-        list_books(p_choice, books_menu, patron_menu)
+        list_books(patron)
         if len(patron.books()) > 0:
             books_menu(patron)
         else:

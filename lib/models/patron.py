@@ -65,7 +65,6 @@ class Patron:
 
     @classmethod
     def create_table(cls):
-        """ Create a new table to keep track of attributes associated with various Patron instances """
         sql = """
             CREATE TABLE IF NOT EXISTS patrons (
             id INTEGER PRIMARY KEY,
@@ -80,7 +79,6 @@ class Patron:
 
     @classmethod
     def drop_table(cls):
-        """ Drop the table the hosts instances of the Patron class """
         sql = """
             DROP TABLE IF EXISTS patrons;
         """
@@ -89,7 +87,6 @@ class Patron:
 
 
     def save(self):
-        """ Insert a new row in the patrons table with name and DOB of the Patron instance. Update ID attribute using primary key of row and save the object to the Patron dictionary """
         sql = """
             INSERT INTO patrons (first_name, last_name, age)
             VALUES (?, ?, ?)
@@ -103,7 +100,6 @@ class Patron:
 
     @classmethod
     def create(cls, first_name, last_name, age):
-        """ Create an instance of Patron and save its attributes to the database """
         patron = cls(first_name, last_name, age)
         patron.save()
         return patron
@@ -120,21 +116,23 @@ class Patron:
 
     
     def delete(self):
-        """ Delete database row associated with Patron instance """
         sql = """
+            DELETE FROM books
+            WHERE patron_id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        sql2 = """
             DELETE FROM patrons
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.id,))
+        CURSOR.execute(sql2, (self.id,))
         CONN.commit()
-
         del type(self).all[self.id]
         self.id = None
 
 
     @classmethod
     def instance_from_db(cls, row):
-        """ Return a Patron object using data from the table """
         patron = cls.all.get(row[0])
         # age = int(row[3])
         if patron:
@@ -151,7 +149,6 @@ class Patron:
     
     @classmethod
     def get_all(cls):
-        """ Return a list of patrons from the Patrons table """
         sql = """
             SELECT * FROM patrons
         """
@@ -162,7 +159,6 @@ class Patron:
     
     @classmethod
     def find_by_id(cls, id):
-        """ Return a Patron object associated with the table row that matches the id """
         sql = """
             SELECT *
             FROM patrons
@@ -183,14 +179,14 @@ class Patron:
         return cls.instance_from_db(row) if row else None
     
 
-    @classmethod
-    def table_length(cls):
-        sql = """
-            SELECT *
-            FROM patrons
-        """
-        rows = CURSOR.execute(sql).fetchall()
-        return int(len(rows))
+    # @classmethod
+    # def table_length(cls):
+    #     sql = """
+    #         SELECT *
+    #         FROM patrons
+    #     """
+    #     rows = CURSOR.execute(sql).fetchall()
+    #     return int(len(rows))
     
 
         

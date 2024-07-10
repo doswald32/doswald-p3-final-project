@@ -75,16 +75,7 @@ def add_new_book(patron):
 
 
 def delete_patron(patron):
-    rows = CURSOR.execute(sql, (p_choice,)).fetchall()
-    for row in rows:
-        book = Book.instance_from_db(row)
-        book.delete()
-    CURSOR.execute(sql2, (p_choice,))
-    CONN.commit()
-    print("")
-    print("Patron successfully deleted")
-    print("")
-    list_patrons()
+    patron.delete()
 
 
 def delete_book(book):

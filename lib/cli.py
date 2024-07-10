@@ -110,7 +110,12 @@ def books_menu(patron):
         print("")
         books_menu(patron)
     elif b_choice == "D" or b_choice == "d":
-        delete_patron(p_choice)
+        delete_patron(patron)
+        print("")
+        print("Patron successfully deleted.")
+        print("")
+        list_patrons()
+        print("")
         patron_menu()
     elif b_choice == "E" or b_choice == "e":
         exit_program()

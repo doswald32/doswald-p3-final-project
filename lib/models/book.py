@@ -114,16 +114,15 @@ class Book():
         """
         CURSOR.execute(sql, (self.title, self.author, self.pages, self.description, self.patron_id))
         CONN.commit()
-
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
 
     
     @classmethod
     def create(cls, title, author, pages, description, patron_id):
-            book = cls(title, author, pages, description, patron_id)
-            book.save()
-            return book
+        book = cls(title, author, pages, description, patron_id)
+        book.save()
+        return book
     
 
     def update(self, title, author, pages, description, patron_id):
@@ -195,11 +194,11 @@ class Book():
         return cls.instance_from_db(row) if row else None
     
 
-    @classmethod
-    def table_length(cls):
-        sql = """
-            SELECT *
-            FROM books
-        """
-        rows = CURSOR.execute(sql).fetchall()
-        return int(len(rows))
+    # @classmethod
+    # def table_length(cls):
+    #     sql = """
+    #         SELECT *
+    #         FROM books
+    #     """
+    #     rows = CURSOR.execute(sql).fetchall()
+    #     return int(len(rows))

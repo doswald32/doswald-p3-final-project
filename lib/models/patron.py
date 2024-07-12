@@ -13,7 +13,7 @@ class Patron:
 
 
     def __repr__(self):
-        return f"<Patron ID {self.id}: {self.last_name}, {self.first_name}   Age: {self.age}>"
+        return f"<{self.last_name}, {self.first_name}   Age: {self.age}>"
     
 
     @property
@@ -134,7 +134,6 @@ class Patron:
     @classmethod
     def instance_from_db(cls, row):
         patron = cls.all.get(row[0])
-        # age = int(row[3])
         if patron:
             patron.first_name = row[1]
             patron.last_name = row[2]
